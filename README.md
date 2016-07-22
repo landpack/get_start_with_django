@@ -1,62 +1,89 @@
-#Get start with django
-I have long time no work with django, because i have a lovely toy `flask`. but
- for get a job, i have to learn something about django today! I will follow the tutorial from [django] documentation.
- 
-###Part 1
-There are few command very useful, so list below.
+# Run Just Pt
+This is a demo for test the personal ability by the PuTao  ,There are only two point I need to do but I attachment one (deploy it to cloudy) myself.
 
-* 1.Run `django-admin startproject mysite` to create a project.
-* 2.Run `python manage.py runserver` to run the web server.
-* 3.Run `python manage.py startapp polls` to createa a app.
+* 1.How to configure the environment.
+* 2.Do some define & http request according the models declare.
+* 3.Deploy it to cloudy.
 
-####Write my first view
-
-polls/views.py
+##First Mission (configure env)
 
 ```
-from django.http import HttpResponse
+git clone https://github.com/landpack/run_just_pt.git
+cd run_just_pt
+virtualenv putaoEnv
+source ./putaoEnv/bin/activate
+pip install django
+cp -r ~/Desktop/just_pt/ ./just_pt
+```
+##Second Mission (make it work)
+---
 
-
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+###Try to run it.
+Now, I can focus on the project! First at first, let's try to run the project without any modify, see everything work fine!
 
 ```
-
-####Map the url to view function
-In the polls/urls.py file include following code.
-
-```
-from django.conf.urls import url, include
-
-from . import views
-
-urlpatterns = [
-    url(r'^$', views.index, name='index'),
-]
-```
-####Run it & test
-
-```
+cd just_pt
 python manage.py runserver
 ```
+Now that the server’s running, I can visit http://127.0.0.1:8000/ with my Web browser!
 
-###Part 2
+###Do some anlysis
 
-There are many file inside the project, I just need to know the below item for now.
+Normally, there few file should be inside the `demo` file, but the `PuTao` remove some, What we missed?
 
-* 1.Database setup inside of `mysite/settings.py`
-* 2.Run the `python manage.py migrate`
-* 3.Create models by Django ORM
-* 4.Tell the project that the polls app is installed.
-* 5.Run `python manage.py makemigrations polls`
-* 6.Run `python manage.py migrate`
+* 1.The `urls.py`
+* 2.The `apps.py`
+* 3.The `admin.py`
+* 4.The `views.py`
+* 5.The `tests.py`
 
+To install the `demo` app on the project, just simple configure it on the `settings.py` and then write a `apps.py` inside to the `demo`. 
 
-By put `polls.apps.PollsConfig` on the `INSTALLED_APPS` list, and then the django project will know it. To test your models work as expect,you can play with shell.
+demo/apps.py
 
 ```
-python manage.py shell
+from django.apps import AppConfig
+
+
+class DemoConfig(AppConfig):
+    name = 'demo'
+
 ```
 
+To manage the demo models easy, I just simple register it   into the admin. 
 
-[django]:https://docs.djangoproject.com/en/1.9/intro/tutorial01/
+
+```
+from django.contrib import admin
+
+from .models import Message, UserMessage
+admin.site.register(Message)
+admin.site.register(UserMessage)
+
+```
+Now, Just run the `python manage.py makemigrations demo`, if everything work ok, congratulation, you keep going. But, it's impossible, the `just_pt` project is Bug-Box,you should move the inside `just_pt/just_pt/demo` out  to `just_pt/demo`, and then run the `makemigration` again. if everthing work for you (Haha, it's work for me), try the `python manage.py migrate` to make write to the `sqlite` database.
+
+###Create super user
+
+This is very easy to create a superuser, if you work with  `flask` you be sadly ...
+
+```
+python manage.py createsuperuser
+```
+Hit enter, and then follow promt expect you input some personal information , like your name, password, email, just input will fine :)
+
+###Test models & admin
+
+
+## Last Mission(Deploy it)
+
+pass
+
+
+###How to deploy it on pythonanywhere?
+
+pass
+
+### How to deploy it on Heroku ?
+
+pass
