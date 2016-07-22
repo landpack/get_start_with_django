@@ -40,3 +40,23 @@ urlpatterns = [
 python manage.py runserver
 ```
 
+###Part 2
+
+There are many file inside the project, I just need to know the below item for now.
+
+* 1.Database setup inside of `mysite/settings.py`
+* 2.Run the `python manage.py migrate`
+* 3.Create models by Django ORM
+* 4.Tell the project that the polls app is installed.
+* 5.Run `python manage.py makemigrations polls`
+* 6.Run `python manage.py migrate`
+
+
+By put `polls.apps.PollsConfig` on the `INSTALLED_APPS` list, and then the django project will know it. To test your models work as expect,you can play with shell.
+
+```
+python manage.py shell
+```
+
+
+[django]:https://docs.djangoproject.com/en/1.9/intro/tutorial01/
